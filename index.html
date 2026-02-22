@@ -214,6 +214,29 @@ body::after {
   50% { opacity: 1; }
   100% { opacity: 0.3; }
 }
+  /* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 768px) {
+  /* Make side panel full screen on mobile */
+  .side-panel {
+    width: 100%;
+    right: -100%;
+  }
+  .side-panel.active {
+    right: 0;
+  }
+
+  /* Optional: reduce hero padding for small screens */
+  .container {
+    padding: 0 15px;
+  }
+
+  /* Scroll indicator smaller on mobile */
+  .scroll-indicator {
+    height: 40px;
+    width: 2px;
+    bottom: 15px;
+  }
+}
 </style>
 <!-- <link rel="icon" type="image/png" href="logo.png"> -->
 </head>
