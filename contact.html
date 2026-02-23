@@ -93,9 +93,13 @@ body::after {
 .hamburger span {
   height: 3px;
   width: 100%;
-  background: #FFFFFF;
   border-radius: 2px;
   transition: 0.4s ease;
+  background: linear-gradient(90deg, var(--canada-red), var(--india-blue));
+}
+
+.hamburger:hover span {
+  box-shadow: 0 0 8px var(--canada-red);
 }
 
 .hamburger.active span:nth-child(1) {
