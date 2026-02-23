@@ -279,10 +279,11 @@ button:hover {
       </p>
     </div>
 
-    <form action="mailto:contact@13378471.ca" method="POST" enctype="text/plain">
+    <form action="https://contact-form-handler.yourusername.workers.dev" method="POST" enctype="text/plain">
       <input type="text" name="name" placeholder="Your Name" required>
       <input type="email" name="email" placeholder="Your Email" required>
       <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+      <div class="cf-turnstile" data-sitekey="0x4AAAAAACgsgeEsR2p1Tjyf"></div>
       <button type="submit">Send Message</button>
     </form>
 
@@ -299,6 +300,6 @@ function toggleMenu() {
   overlay.classList.toggle("active");
 }
 </script>
-
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </body>
 </html>
