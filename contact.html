@@ -88,7 +88,7 @@ body::after {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  z-index: 2001;
+  z-index: 1001;
 }
 
 .hamburger span {
@@ -252,12 +252,29 @@ body::after {
 </div>
 
 <div class="side-panel" id="menu">
-  <a href="index.html">Home</a>
-  <a href="#">Technology</a>
-  <a href="#">Clients</a>
-  <a href="#">About</a>
-  <a href="contact.html">Contact</a>
-  <div class="panel-footer">13378471 Canada Inc.</div>
+  <a href="index.html" onclick="closeMenu()">Home</a>
+  <a href="#" onclick="closeMenu()">Technology</a>
+  <a href="#" onclick="closeMenu()">Clients</a>
+  <a href="#" onclick="closeMenu()">About</a>
+  <a href="contact.html" onclick="closeMenu()">Contact</a>
+
+  <div class="panel-footer">
+    <a href="https://time.is/Toronto" id="time_is_link" rel="nofollow" style="font-size:18px;color:grey">
+      Time in Toronto:
+    </a>
+    <span id="Toronto_z18a" style="font-size:20px;color:grey"></span>
+
+    <script src="//widget.time.is/t.js"></script>
+    <script>
+      time_is_widget.init({Toronto_z18a:{}});
+    </script>
+
+    <br><br>
+
+    <a href="13378471.ca" style="font-size:20px;color:grey">
+      13378471 Canada Inc.
+    </a>
+  </div>
 </div>
 
 <section class="contact-section">
@@ -287,9 +304,20 @@ function toggleMenu() {
   const menu = document.getElementById("menu");
   const hamburger = document.getElementById("hamburger");
   const overlay = document.getElementById("overlay");
+
   menu.classList.toggle("active");
   hamburger.classList.toggle("active");
   overlay.classList.toggle("active");
+}
+
+function closeMenu() {
+  const menu = document.getElementById("menu");
+  const hamburger = document.getElementById("hamburger");
+  const overlay = document.getElementById("overlay");
+
+  menu.classList.remove("active");
+  hamburger.classList.remove("active");
+  overlay.classList.remove("active");
 }
 </script>
 </body>
