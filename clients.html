@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>13378471 | Home</title>
+<title>Clients | 13378471</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
 <style>
@@ -24,21 +24,34 @@ color:var(--light);
 overflow-x:hidden;
 }
 
-/* Background Glow */
-body::before, body::after{
+/* Animated Canada + India Glow Background */
+body::before{
 content:"";
 position:fixed;
-width:800px;height:800px;
-filter:blur(140px);
-opacity:.25;z-index:-1;
-}
-body::before{
+width:900px;height:900px;
 background:radial-gradient(circle,var(--canada-red),transparent 60%);
-top:-200px;left:-200px;
+top:-250px;left:-250px;
+filter:blur(160px);
+opacity:.25;
+z-index:-1;
+animation:glowMove 12s ease-in-out infinite alternate;
 }
+
 body::after{
+content:"";
+position:fixed;
+width:900px;height:900px;
 background:radial-gradient(circle,var(--india-blue),transparent 60%);
-bottom:-200px;right:-200px;
+bottom:-250px;right:-250px;
+filter:blur(160px);
+opacity:.25;
+z-index:-1;
+animation:glowMove 14s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes glowMove{
+0%{transform:translate(0,0);}
+100%{transform:translate(60px,60px);}
 }
 
 /* Overlay */
@@ -102,32 +115,54 @@ font-size:13px;color:var(--muted);
 letter-spacing:2px;
 }
 
-/* Hero */
+/* Hero Section */
 .hero{
 height:100vh;
-display:flex;justify-content:center;
-align-items:center;text-align:center;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
 padding:0 20px;
+position:relative;
+overflow:hidden;
 }
+
 .hero h1{
-font-size:clamp(48px,8vw,120px);
+font-size:clamp(48px,8vw,110px);
 font-weight:800;
-background:linear-gradient(90deg,var(--canada-red),var(--india-blue));
+background:linear-gradient(-45deg,
+var(--canada-red),
+var(--india-blue),
+var(--canada-red),
+var(--india-blue));
+background-size:400% 400%;
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
-animation:float 6s ease-in-out infinite;
+animation:gradientShift 12s ease infinite;
 }
+
 .hero p{
 margin-top:20px;
+font-size:18px;
+letter-spacing:2px;
 color:var(--muted);
-letter-spacing:3px;
+animation:fadeUp 1.5s ease forwards;
 }
 
-@keyframes float{
-0%,100%{transform:translateY(0);}
-50%{transform:translateY(-20px);}
+/* Gradient Animation */
+@keyframes gradientShift{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
 }
 
+/* Fade Up */
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(40px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+/* Mobile */
 @media(max-width:768px){
 .side-panel{width:100%;right:-100%;}
 .side-panel.active{right:0;}
@@ -154,8 +189,8 @@ letter-spacing:3px;
 
 <section class="hero">
 <div>
-<h1>13378471.ca</h1>
-<p>C A N A D A</p>
+<h1>Our Clients</h1>
+<p>Trusted Across Canada & India</p>
 </div>
 </section>
 
