@@ -181,12 +181,15 @@ body::after {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 10px;
+  animation: fadeUp 3.2s ease forwards;
 }
 
 .contact-subtitle {
   font-size: 34px;
   color: var(--light);
   margin-bottom: 40px;
+  animation: fadeUp 2.2s ease forwards;
+  animation-delay: 0.5s;
 }
 
 .contact-info {
@@ -225,6 +228,17 @@ body::after {
   }
   .contact-card {
     padding: 35px;
+  }
+}
+  /* ===== Animations ===== */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 </style>
