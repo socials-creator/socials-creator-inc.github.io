@@ -58,7 +58,7 @@ body::after {
 }
 
 /* ===== Overlay ===== */
-.overlay {
+ {
   position: fixed;
   top: 0;
   left: 0;
@@ -69,7 +69,7 @@ body::after {
   opacity: 0;
   visibility: hidden;
   transition: 0.4s ease;
-  z-index: 900;
+  z-index: 998;
 }
 
 .overlay.active {
@@ -88,7 +88,7 @@ body::after {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  z-index: 1001;
+  z-index: 3000;
 }
 
 .hamburger span {
@@ -124,7 +124,7 @@ body::after {
   justify-content: center;
   align-items: center;
   transition: right 0.4s ease;
-  z-index: 1000;
+  z-index: 2000;
   border-left: 1px solid rgba(255,255,255,0.05);
 }
 
