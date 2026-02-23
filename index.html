@@ -220,9 +220,17 @@ body::after {
 @media (max-width: 768px) {
   /* Make side panel full screen on mobile */
   .side-panel {
-    width: 90%;
-    right: -90%;
+    width: 100%;
+    right: -100%;
   }
+  .side-panel a {
+  text-decoration: none;
+  color: var(--light);
+  font-size: 24px;
+  margin: 20px 0;
+  position: relative;
+  transition: 0.3s ease;
+}
   .side-panel.active {
     right: 0;
   }
