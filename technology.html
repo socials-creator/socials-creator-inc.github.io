@@ -4,44 +4,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Technology | 13378471</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-
-<style>
-:root{
---neon:#00f5ff;
---purple:#6a00ff;
---dark:#0a0a12;
---light:#fff;
---muted:#8a8f98;
-}
-
-*{margin:0;padding:0;box-sizing:border-box;}
-body{
-font-family:'Inter',sans-serif;
-background:var(--dark);
-color:var(--light);
-overflow:hidden;
-}
-
-/* Digital Grid Background */
-body::before{
-content:"";
-position:fixed;inset:0;
-background:
-linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),
-linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
-background-size:40px 40px;
-animation:gridMove 15s linear infinite;
-z-index:-1;
-}
-@keyframes gridMove{
-from{background-position:0 0;}
-to{background-position:40px 40px;}
-}
-
-/* ===== SAME NAVIGATION ===== */
-.overlay,.hamburger,.side-panel,.panel-footer{
-all:unset;
-}
-
-/* Reusing same navigation from index */
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="fade">
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+<div class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+<div class="side-panel" id="menu">
+<a href="index.html">Home</a>
+<a href="technology.html">Technology</a>
+<a href="clients.html">Clients</a>
+<a href="about.html">About</a>
+<a href="contact.html">Contact</a>
+<div class="panel-footer">13378471 Canada Inc.</div>
+</div>
+<section class="hero hero-tech">
+  <div>
+    <h1>Technology</h1>
+    <p>Digital Innovation</p>
+  </div>
+</section>
+<script src="script.js"></script>
+</body>
+</html>
