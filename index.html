@@ -27,7 +27,7 @@ html{scroll-behavior:smooth;}
 
 body{
   font-family:'Inter',sans-serif;
-  background:#111122; /* default night */
+  background:#111111;
   color:var(--light);
   overflow-x:hidden;
   transition: background 2s linear;
@@ -45,20 +45,42 @@ section{
   transition:transform 0.3s ease-out;
 }
 
-/* Text shadow for readability */
 h1, p{
   text-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-/* Section fade animation */
 section{
   opacity:0;
   transform:translateY(60px);
-  transition:1.2s cubic-bezier(.16,1,.3,1);
+  transition:opacity 1s cubic-bezier(.16,1,.3,1), transform 1s cubic-bezier(.16,1,.3,1);
 }
 section.active{
   opacity:1;
   transform:translateY(0);
+}
+
+/* Downward arrow with bounce, scale, and opacity */
+.scroll-down {
+  position: absolute;
+  bottom:40px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:2rem;
+  color:var(--lightgrey);
+  cursor:pointer;
+  opacity:0;
+  transition: opacity 0.8s ease, color 0.8s ease;
+  animation: bounceScale 2s infinite;
+}
+
+.scroll-down.show{
+  opacity:1;
+}
+
+@keyframes bounceScale{
+  0%, 20%, 50%, 80%, 100%{ transform:translateX(-50%) translateY(0) scale(1); opacity:0.8; }
+  40%{ transform:translateX(-50%) translateY(-15px) scale(1.1); opacity:1; }
+  60%{ transform:translateX(-50%) translateY(-7px) scale(1.05); opacity:0.95; }
 }
 
 /* HOME */
@@ -77,8 +99,6 @@ section.active{
   color:var(--lightgrey);
   transition: color 2s linear;
 }
-
-/* TECHNOLOGY */
 .technology h1{
   font-size:clamp(48px,8vw,110px);
   font-weight:800;
@@ -93,8 +113,6 @@ section.active{
   color:var(--lightgrey);
   transition: color 2s linear;
 }
-
-/* CLIENTS */
 .clients h1{
   font-size:clamp(48px,8vw,110px);
   font-weight:800;
@@ -110,8 +128,6 @@ section.active{
   color:var(--lightgrey);
   transition: color 2s linear;
 }
-
-/* ABOUT */
 .about h1{
   font-size:clamp(48px,8vw,110px);
   font-weight:800;
@@ -127,8 +143,6 @@ section.active{
   color:var(--lightgrey);
   transition: color 2s linear;
 }
-
-/* CONTACT */
 .contact h1{
   font-size:clamp(48px,8vw,110px);
   font-weight:800;
@@ -142,7 +156,6 @@ section.active{
   color:var(--lightgrey);
   transition: color 2s linear;
 }
-
 .contact-card{
   font-size:clamp(12px,8vw,30px);
   color:var(--lightgrey);
@@ -174,40 +187,35 @@ section.active{
 </head>
 <body>
 
-<!-- HOME -->
 <section class="home active" id="home">
   <div>
     <h1>13378471.ca</h1>
     <p>C A N A D A</p>
+    <div class="scroll-down" data-target="technology">&#x2193;</div>
   </div>
 </section>
-
-<!-- TECHNOLOGY -->
 <section class="technology" id="technology">
   <div>
     <h1>Technology</h1>
     <p>Innovating Beyond Boundaries</p>
+    <div class="scroll-down" data-target="clients">&#x2193;</div>
   </div>
 </section>
-
-<!-- CLIENTS -->
 <section class="clients" id="clients">
   <div>
     <h1>Our Clients</h1>
     <p>We serve clients Pole to Pole</p>
+    <div class="scroll-down" data-target="about">&#x2193;</div>
   </div>
 </section>
-
-<!-- ABOUT -->
 <section class="about" id="about">
   <div>
     <h1>About Us</h1>
     <p>Innovation • Integration</p>
     <p><br>Providing Information Technology Services since 2021.</p>
+    <div class="scroll-down" data-target="contact">&#x2193;</div>
   </div>
 </section>
-
-<!-- CONTACT -->
 <section class="contact" id="contact">
   <div>
     <h1>Contact</h1>
@@ -222,103 +230,74 @@ section.active{
 </section>
 
 <script>
-/* =========================
-   WEIGHTED SMOOTH SCROLL (INERTIA)
-========================= */
-const body = document.body;
-let current = 0;
-let target = 0;
-let ease = 0.08;
+const body=document.body;
+let current=0,target=0,ease=0.08;
 
-const wrapper = document.createElement("div");
-wrapper.style.position = "fixed";
-wrapper.style.top = 0;
-wrapper.style.left = 0;
-wrapper.style.width = "100%";
-wrapper.style.willChange = "transform";
-
-while(body.firstChild){
-  wrapper.appendChild(body.firstChild);
-}
+const wrapper=document.createElement("div");
+wrapper.style.position="fixed";
+wrapper.style.top=0;
+wrapper.style.left=0;
+wrapper.style.width="100%";
+wrapper.style.willChange="transform";
+while(body.firstChild){ wrapper.appendChild(body.firstChild);}
 body.appendChild(wrapper);
 
-function setBodyHeight(){
-  body.style.height = wrapper.getBoundingClientRect().height + "px";
-}
-setBodyHeight();
-window.addEventListener("resize", setBodyHeight);
+function setBodyHeight(){ body.style.height=wrapper.getBoundingClientRect().height+"px";}
+setBodyHeight(); window.addEventListener("resize",setBodyHeight);
 
-function smoothScroll(){
-  target = window.scrollY;
-  current += (target - current) * ease;
-  wrapper.style.transform = `translateY(-${current}px)`;
-  requestAnimationFrame(smoothScroll);
-}
+function smoothScroll(){ target=window.scrollY; current+=(target-current)*ease; wrapper.style.transform=`translateY(-${current}px)`; requestAnimationFrame(smoothScroll);}
 smoothScroll();
 
-/* Section Fade Activation */
-const sections = document.querySelectorAll("section");
-const observer = new IntersectionObserver(entries=>{
+const sections=document.querySelectorAll("section");
+const observer=new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
-    if(entry.isIntersecting) entry.target.classList.add("active");
+    const arrow=entry.target.querySelector('.scroll-down');
+    if(entry.isIntersecting){
+      entry.target.classList.add("active");
+      if(arrow && entry.target.id!=="contact"){ setTimeout(()=>{arrow.classList.add('show');},400);}
+    }else{ if(arrow) arrow.classList.remove('show');}
   });
 },{threshold:.4});
-sections.forEach(section => observer.observe(section));
+sections.forEach(section=>observer.observe(section));
 
-/* Parallax Text Effect */
-window.addEventListener("scroll",()=>{
-  sections.forEach(section=>{
-    let rect = section.getBoundingClientRect();
-    let offset = rect.top * 0.05;
-    section.style.transform = `translateY(${offset}px)`;
+window.addEventListener("scroll",()=>{sections.forEach(section=>{let rect=section.getBoundingClientRect(); section.style.transform=`translateY(${rect.top*0.05}px)`;});});
+
+const dayColor=[215,229,240],nightColor=[17,17,34];
+const textElements=document.querySelectorAll('.home p, .technology p, .clients p, .about p, .contact p, .contact-card');
+const arrows=document.querySelectorAll('.scroll-down');
+
+function lerp(a,b,t){ return a+(b-a)*t;}
+function updateBackgroundAndText(){
+  const now=new Date(),hour=now.getHours()+now.getMinutes()/60;
+  let bg=[...nightColor],textColor='#EEEEEE',arrowColor='var(--lightgrey)';
+  if(hour>=7&&hour<=9){ 
+    let t=(hour-7)/2; 
+    bg=dayColor.map((c,i)=>lerp(nightColor[i],c,t)); 
+    textColor=`rgb(${Math.round(lerp(238,0,t))},${Math.round(lerp(238,0,t))},${Math.round(lerp(238,0,t))})`;
+    arrowColor='#06038D';
+  } else if(hour>=17&&hour<=18){ 
+    let t=hour-17; 
+    bg=nightColor.map((c,i)=>lerp(dayColor[i],c,t)); 
+    textColor=`rgb(${Math.round(lerp(0,238,t))},${Math.round(lerp(0,238,t))},${Math.round(lerp(0,238,t))})`;
+    arrowColor='#06038D';
+  } else if(hour>8&&hour<18){ 
+    bg=dayColor; textColor='#000000'; arrowColor='#06038D';
+  } else { 
+    bg=nightColor; textColor='#EEEEEE'; arrowColor='var(--lightgrey)';
+  }
+  body.style.background=`rgb(${Math.round(bg[0])},${Math.round(bg[1])},${Math.round(bg[2])})`;
+  textElements.forEach(el=>el.style.color=textColor);
+  arrows.forEach(a=>a.style.color=arrowColor);
+}
+updateBackgroundAndText(); setInterval(updateBackgroundAndText,60000);
+
+document.querySelectorAll('.scroll-down').forEach(arrow=>{
+  arrow.addEventListener('click',()=>{
+    const targetId=arrow.getAttribute('data-target');
+    const targetSection=document.getElementById(targetId);
+    if(targetSection){ window.scrollTo({top:targetSection.offsetTop, behavior:'smooth'});}
   });
 });
-
-/* =========================
-   TIME-BASED BACKGROUND & TEXT COLOR (8AM-6PM)
-========================= */
-const dayColor = [215, 229, 240]; // #D7E5F0
-const nightColor = [17, 17, 34];  // #111122
-
-const textElements = document.querySelectorAll(
-  '.home p, .technology p, .clients p, .about p, .contact p, .contact-card'
-);
-
-function lerp(a,b,t){ return a + (b-a)*t; }
-
-function updateBackgroundAndText(){
-  const now = new Date();
-  let hour = now.getHours() + now.getMinutes()/60;
-  let bg = [...nightColor];
-  let textColor = '#EEEEEE'; // default night text
-
-  // sunrise transition at 8AM (1 hour fade)
-  if(hour >= 7 && hour <= 9){
-    let t = (hour-7)/2;
-    bg = dayColor.map((c,i)=>lerp(nightColor[i], c, t));
-    textColor = `rgb(${Math.round(lerp(238,0,t))},${Math.round(lerp(238,0,t))},${Math.round(lerp(238,0,t))})`;
-  }
-  // sunset transition at 6PM (1 hour fade)
-  else if(hour >= 17 && hour <= 18){
-    let t = (hour-17)/1;
-    bg = nightColor.map((c,i)=>lerp(dayColor[i], c, t));
-    textColor = `rgb(${Math.round(lerp(0,238,t))},${Math.round(lerp(0,238,t))},${Math.round(lerp(0,238,t))})`;
-  }
-  else if(hour > 8 && hour < 18){ // day
-    bg = dayColor;
-    textColor = '#000000';
-  }
-  else { // night
-    bg = nightColor;
-    textColor = '#EEEEEE';
-  }
-
-  body.style.background = `rgb(${Math.round(bg[0])},${Math.round(bg[1])},${Math.round(bg[2])})`;
-  textElements.forEach(el => el.style.color = textColor);
-}
-
-updateBackgroundAndText();
-setInterval(updateBackgroundAndText, 60000); // every minute
 </script>
 
 </body>
