@@ -183,6 +183,17 @@ section.active{
   50%{background-position:100% 50%;}
   100%{background-position:0% 50%;}
 }
+/* ==== Mobile ==== */
+@media (max-width: 768px) {
+  .home p,
+  .technology p,
+  .clients p,
+  .about p,
+  .contact p,
+  .contact-card {
+    font-size: clamp(10px, 4vw, 18px); /* smaller on mobile */
+  }
+}
 </style>
 </head>
 <body>
