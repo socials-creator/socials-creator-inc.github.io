@@ -321,15 +321,59 @@ contact@13378471.ca
 </section>
 
 <script>
+
 function toggleMenu(){
 document.getElementById("menu").classList.toggle("active");
 document.getElementById("hamburger").classList.toggle("active");
 document.getElementById("overlay").classList.toggle("active");
 }
 
-/* ===== Scroll Animation Observer ===== */
-const sections=document.querySelectorAll("section");
-const observer=new IntersectionObserver(entries=>{
+/* =========================
+   APPLE-STYLE SMOOTH ENGINE
+========================= */
+
+const body = document.body;
+const html = document.documentElement;
+
+let current = 0;
+let target = 0;
+let ease = 0.08;   // lower = smoother / more floaty
+let maxScroll;
+
+/* Create smooth wrapper */
+const wrapper = document.createElement("div");
+wrapper.style.position = "fixed";
+wrapper.style.top = 0;
+wrapper.style.left = 0;
+wrapper.style.width = "100%";
+wrapper.style.willChange = "transform";
+wrapper.style.transition = "transform 0s";
+
+while (body.firstChild) {
+wrapper.appendChild(body.firstChild);
+}
+body.appendChild(wrapper);
+
+/* Enable fake scroll height */
+function setBodyHeight(){
+maxScroll = wrapper.getBoundingClientRect().height - window.innerHeight;
+body.style.height = wrapper.getBoundingClientRect().height + "px";
+}
+setBodyHeight();
+window.addEventListener("resize", setBodyHeight);
+
+/* Smooth scroll loop */
+function smoothScroll(){
+target = window.scrollY;
+current += (target - current) * ease;
+wrapper.style.transform = `translateY(-${current}px)`;
+requestAnimationFrame(smoothScroll);
+}
+smoothScroll();
+
+/* Section Fade Activation */
+const sections = document.querySelectorAll("section");
+const observer = new IntersectionObserver(entries=>{
 entries.forEach(entry=>{
 if(entry.isIntersecting){
 entry.target.classList.add("active");
@@ -340,6 +384,20 @@ entry.target.classList.add("active");
 sections.forEach(section=>{
 observer.observe(section);
 });
+
+/* Subtle Parallax Depth */
+sections.forEach(section=>{
+section.style.transformStyle = "preserve-3d";
+});
+
+window.addEventListener("scroll",()=>{
+sections.forEach(section=>{
+let rect = section.getBoundingClientRect();
+let offset = rect.top * 0.05;
+section.style.transform = `translateY(${offset}px)`;
+});
+});
+
 </script>
 
 </body>
